@@ -17,6 +17,11 @@ public class LinkedListManager : MonoBehaviour
         {
             AddNode();
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            RemoveNode();
+        }
     }
 
     void AddNode()
@@ -47,5 +52,27 @@ public class LinkedListManager : MonoBehaviour
 
         nodes.Add(newNode);
         currentValue++;
+    }
+
+    void RemoveNode()
+    {
+        if (nodes.Count == 0) return;
+
+        // Remove the last node
+        GameObject lastNode = nodes[nodes.Count - 1];
+        nodes.RemoveAt(nodes.Count - 1);
+        Destroy(lastNode);
+
+        // Update the new last node's next pointer to NULL
+        if (nodes.Count > 0)
+        {
+            TextMeshPro[] lastTexts = nodes[nodes.Count - 1].GetComponentsInChildren<TextMeshPro>();
+            if (lastTexts.Length >= 2)
+            {
+                lastTexts[1].text = "NULL";
+            }
+        }
+
+        currentValue = Mathf.Max(1, currentValue - 1);
     }
 }
